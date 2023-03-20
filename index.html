@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-6">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WalmartCookieClicker</title>
+</head>
+<body style="background-color: lightblue;">
+    <p style="font-family: Arial, Helvetica, sans-serif;" id="C"></p>
+    <p style="font-family: Arial, Helvetica, sans-serif;" id="TC"></p>
+    <p id="timer"></p>
+    <p style="margin-left: 500px; font-family: Arial, Helvetica, sans-serif;" id="CPC"></p>
+    <p style="margin-left: 500px; font-family: Arial, Helvetica, sans-serif;" id="UC"></p> 
+    <p style="margin-left: 950px; font-family: Arial, Helvetica, sans-serif;" id="CPS"></p>
+    <p style="margin-left: 950px; font-family: Arial, Helvetica, sans-serif;" id="BC"></p>
+
+<script>
+    var Cookies = 0; //Total Amount of cookies
+    var MoreCookies = 1; //The amount of cookies that you will get from the Upgrades
+    var BuildingCookies = 0; //The amount of cookied gained from buildings
+    var UpgradeAmount = 1; //This is the amount that of extra cookies it will cost to but mroe upgrades the mroe upgrades you have.
+    var BuildingAmount = 1; //The amount of buildings the player currently owns
+    var TotalCookies = 0;
+    var CrunchSound = new Audio('crunch.wav');
+    var CookiePic = new Image('cookie.png');
+    var BackgroundMusic = new Audio('Music.wav');
+
+    setInterval(myTimer, 1000); //Sets a timer on 1 second or 1000 milliseconds
+    setInterval(text, 1); //Sets a timer on 1 millisecond
+
+
+function text() //Function to display text
+{
+    document.getElementById("C").innerHTML = "Cookies: " + Cookies; //Makes the text change live to show how many cookies we have
+    document.getElementById("TC").innerHTML = "Total cookies: " + TotalCookies;
+    document.getElementById("CPC").innerHTML = "Cookies per click: " + UpgradeAmount; //Makes the text change live to show how many cookies we get per second from buildings
+    document.getElementById("UC").innerHTML = "Upgrade cost: " +  10 * UpgradeAmount; //Shows how much the next upgrade costs
+    document.getElementById("BC").innerHTML = "Building cost: " +  3 * BuildingAmount; //Shows how much the next building costs
+}
+
+function myTimer() //The timer that goes every second
+{
+    const d = new Date(); //Compares previews date to the date now every second, in other words a counter that counts seconds
+    BuildingCookies += 1 * BuildingAmount; //Adds the amount of cookies we should get from buildings every seconds to our total amount of cookies
+    document.getElementById("CPS").innerHTML = "Cookies per second: " + (BuildingCookies - 1); //Displays how many cookies we get per second
+    Cookies += (BuildingCookies - 1); //Adds the actuall cookies that we get from buildings to out total cookies every second
+    TotalCookies += (BuildingCookies - 1);
+    BuildingCookies = 0; //Making BuildingCookies 0 allows us to compare and count seconds
+    if (10000 <= TotalCookies)
+    {
+        document.getElementById("CookiePicture").src = "RANGGYU.jpg";
+        BackgroundMusic.play();
+    }
+    else
+    if (5000 <= TotalCookies)
+    {
+        document.getElementById("CookiePicture").src = "boreo.png";
+    }
+    else
+    if (1000 <= TotalCookies)
+    {
+        document.getElementById("CookiePicture").src = "hallongrota.png";
+    }
+    else
+    if (100 <= TotalCookies)
+    {
+        document.getElementById("CookiePicture").src = "yummy.png";
+    }
+}
+    function CookiePressed() //This happens when the cookies is pressed
+    {
+        CrunchSound.play();
+        Cookies += MoreCookies; //Adds cookies when the cookeis is pressed, the amount depends on how many upgrades
+        TotalCookies += MoreCookies
+        console.log(Cookies) //Tells the console how many cookies we have
+    }
+    
+    function Upgrade() //This happens when you try to buy an upgrade
+    {
+        if (Cookies >= 10 * UpgradeAmount) //Checks if you have anough cookies
+        {
+        console.log(MoreCookies) //Tells the console how many extra cookies we gain each time we click
+        console.log(Cookies)
+        Cookies -= (10 * UpgradeAmount); //Takes away the amount of cookies it costs to buy an Upgrade
+        console.log(Cookies)
+        ++MoreCookies; //Adds the extra cookies
+        ++UpgradeAmount; //Adds how many Upgrades we have
+        }
+        else // If the player doesn't have enough coookies
+        {
+            console.log("Not Enough Cookies") //Tells the console that the players doesn't have enough cookies
+        }
+    }
+
+    function Building() //This happenes when you try to buy a building
+    {
+        if (Cookies >= 3 * BuildingAmount) //Checks if the player has enough cookies
+        {
+        console.log(BuildingCookies) //Tells the console how many cookies we get per second from buildings
+        console.log(BuildingAmount) //Tells the console how many buildings we have
+        console.log(Cookies) //Tells the console our total amount of cookies
+        Cookies -= ((BuildingAmount) * 3) //Takes away the amount pf cookies that it costs to but a building
+        console.log(Cookies) //tells the console our total amount of cookies
+        ++BuildingAmount; //Adds 1 to the amount of buildings that we own
+        }
+        else //If the player doesn't have enough cookies
+        {
+            console.log("Not Enough Cookies") //Tells the console that the player does not have enough cookies to buy this
+        }
+    }
+</script>
+
+<button onclick="CookiePressed()"><img src="cookie.png" id="CookiePicture"></button>
+
+<button onclick="Upgrade()"><img src="Upgrade.png" width="400px"></button>
+
+<button onclick="Building()"><img src="Building.png" width="400px"></button>
+
+</body>
+</html>
